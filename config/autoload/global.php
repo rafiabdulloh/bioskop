@@ -15,12 +15,9 @@ return array(
     // ...
     'db' => array(
     'driver' => 'Pdo',
-    //'dsn' => 'mysql:dbname=labs;host=192.168.1.9', //source tutorial2
-    'dsn' => 'mysql:dbname=ian;host=127.0.0.1:33064',
-    //'username' => 'labs',
+    'dsn' => 'mysql:dbname=ian99;host=127.0.0.1:33064',
     'username' => 'root',
-    //'password' => 'makeiteasy',
-    'password' => 'Comrobal23',
+    'password' => 'Test123',
     'driver_options' => array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\'')
     ),
     'service_manager' => array(

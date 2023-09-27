@@ -19,7 +19,7 @@ class IndexController extends AbstractActionController
         return new ViewModel();
     }
 	
-    public function varServerAction()//Ini Harusnya di Model, tapi ini langsung muncul SERVER di Controller
+    public function varServerAction()// Ini Harusnya di Model, tapi ini langsung muncul SERVER di Controller
     // Hasil output function ini bisa juga digunakan di view supaya tampilan oke 
     {
 	$response = $this -> getResponse();

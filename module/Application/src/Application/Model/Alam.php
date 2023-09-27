@@ -5,8 +5,6 @@ namespace Application\Model;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Adapter\Driver\ResultInterface;
-//use Zend\Db\Adapter\Driver\StatementInterface;
-//use Zend\Db\Adapter\Driver\DriverInterface;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\sql\sql;
 use Zend\Db\sql\Select;
