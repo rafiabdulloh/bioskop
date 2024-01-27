@@ -11,20 +11,36 @@
  * file.
  */
     
-return array(
-    // ...
-    'db' => array(
-    'driver' => 'Pdo',
-    'dsn' => 'mysql:dbname=ian99;host=127.0.0.1:33064',
-    'username' => 'root',
-    'password' => 'Test123',
-    'driver_options' => array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\'')
-    ),
-    'service_manager' => array(
-    'aliases' => array(
-        'db' => 'Zend\Db\Adapter\Adapter',
-        ),
-    ),
+//  return array(
+//     // ...
+//     'db' => array(
+//     'driver' => 'Pdo',
+//     'dsn' => 'mysql:dbname=bioskop;host=127.0.0.1:3307',
+//     'username' => 'root',
+//     'password' => '',
+//     'driver_options' => array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\'')
+//     ),
+//     'service_manager' => array(
+//     'aliases' => array(
+//         'db' => 'Zend\Db\Adapter\Adapter',
+//         ),
+//     ),
+// );
 
-);
+return [
+    'db' => [
+        'driver'   => 'Pdo_Mysql',
+        'database' => 'bioskop',
+        'username' => 'root',
+        'password' => '',
+        'hostname' => '127.0.0.1',
+        'port'     => '3307',
+    ],
+    'service_manager' => [
+        'factories' => [
+            'Zend\Db\Adapter\Adapter' => 'Zend\Db\Adapter\AdapterServiceFactory',
+        ],
+    ],
+];
+
 ?>

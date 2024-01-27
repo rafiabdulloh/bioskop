@@ -8,11 +8,14 @@ $(document).ready(function(){
   
   v_request.done(
     function(data, status, jqXHRz) {
-        for (var key in data) {
-            if (data.hasOwnProperty(key)) {
-                $('#server').append('<p>' + key + ' ==> ' + data[key] + '</p>');
-            }
-        }
+      console.log(data)
+      $('#server').append(`<p>`+data+`</p>`)
+        // for (var key in data) {
+        //     if (data.hasOwnProperty(key)) {
+        //         $('#server').append('<p>' + key + ' ==> ' + data[key] + '</p>');
+        //         $('#server').append('<p>' + status + '</p>');
+        //     }
+        // }
     }
   );
 });

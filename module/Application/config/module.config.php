@@ -20,6 +20,31 @@ return array(
                     ),
                 ),
             ),
+            'bioskop' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/bioskop',
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Bioskop',
+                        'action'     => 'index',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'default' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/[:action]',
+                            'constraints' => array(
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Application\Controller\Bioskop',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
             // The following is a route to simplify getting started creating
             // new controllers and actions without needing to create a new
             // module. Simply drop new controllers in, and you can access them
@@ -74,7 +99,8 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Application\Controller\Index' => 'Application\Controller\IndexController',
-            'Application\Controller\Alam' => 'Application\Controller\AlamController'
+            'Application\Controller\Alam' => 'Application\Controller\AlamController',
+            'Application\Controller\Bioskop' => 'Application\Controller\BioskopController', // Tambahkan ini
         ),
     ),
     'view_manager' => array(
@@ -88,6 +114,7 @@ return array(
             'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
+            'application/bioskop/index' => __DIR__ . '/../view/application/bioskop/index.phtml',
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',

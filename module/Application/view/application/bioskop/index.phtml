@@ -1,0 +1,129 @@
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- DataTables CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+
+<!-- DataTables JS -->
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+  var v_request = $.ajax({
+    url: "<?php echo $this->basePath()?>/bioskop/listFilm",
+    type: "GET",
+    dataType: "json",
+  });
+  
+  v_request.done(
+    function(res, status, jqXHRz) {
+      var data = res.data;
+      function generateTableHtml(obj) {
+        return `
+              <tr class="select" data-id='${obj.id_film}' data-nama_film='${obj.nama_film}' data-image="${obj.film_image}" data-jam="${obj.jam_tayang}" onclick="select_film(this)">
+                  <th scope="row" id="img">${obj.film_image}</th>
+                  <td             id="nama" >${obj.nama_film}</td>
+                  <td             id="jam" >${obj.jam_tayang}</td>
+              </tr>`;
+    }
+    // Loop through the array and append tables to #server
+    for (var i = 0; i < data.length; i++) {
+        var tableHtml = generateTableHtml(data[i]);
+        $('#tbody').append(tableHtml);
+    }
+    $('#list-film').DataTable()
+    }
+  );
+});
+
+
+function select_film(row) {
+  var nama = row.getAttribute("data-nama_film");
+  var img = row.getAttribute("data-image");
+  var jam = row.getAttribute("data-jam");
+  var id = row.getAttribute("data-id");
+
+  $('#detail-film-order').prop('hidden', false)
+  $('#tbody-detail-film').html(
+    `<tr>
+                <td rowspan=3>`+img+`</td>
+                <td>judul</td>
+                <td>`+nama+`</td>
+                <td style="display:none" id="id_film">`+id+`</td>
+              </tr>
+              <tr>
+                <td>jam tayang</td>
+                <td>`+jam+`</td>
+              </tr>
+              <tr>
+                <td>sinopsis</td>
+                <td>asdfasdf</td>
+              </tr>`
+  )
+}
+
+
+</script>
+
+<div class="card" id="server" style="display:contents">
+  <div class="card-body">
+    <h5 class="card-title">  BIOSKOP XXI  </h5>
+      <table class="table table-bordered" id="list-film">
+        <thead>
+            <tr>
+                <th scope="col" >Movie</th>
+                <th scope="col" >Judul</th>
+                <th scope="col" >Jam Tayang</th>
+            </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+  </div>
+</div>
+
+
+<!-- card order -->
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title">Nomor Kursi</h3>
+        <p class="card-text"><-- kursi disini --></p>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6" id="detail-film-order" hidden>
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title">Detail Film Order</h3>
+          <p class="card-text">
+            <table class="table table-bordered">
+              <thead>
+                  <tr>
+                      <th scope="col" colspan=3>Movie</th>
+                  </tr>
+              </thead>
+              <tbody id="tbody-detail-film">
+                
+              </tbody>
+            </table>
+          </p>
+          <button onclick="orderTiket()" class="btn btn-success" style="display:block">Order</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  function orderTiket(){
+    id = $('#id_film').text()
+    nomer_duduk = "A1";
+    var input= {       
+       id_film: id,
+       "id_status_pembayaran": "1",
+       nomor_duduk : nomer_duduk
+      }
+  }
+</script>

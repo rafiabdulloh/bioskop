@@ -14,7 +14,7 @@ class AlamController extends AbstractActionController{
         $this->db = $this->config['db'];
     
         $alam = new \Application\Model\Alam2($this->db);
-        $data = $alam->read2();
+        $data = $alam->read();
         
         $response = $this->getResponse();
         $response->setStatusCode(200);
@@ -25,7 +25,7 @@ class AlamController extends AbstractActionController{
     public function showAlamAction(){ //Ini memunculkan alam melalui view
         return new ViewModel();
     }
-  
+    
 }
 
 ?>
