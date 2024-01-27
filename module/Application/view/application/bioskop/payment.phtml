@@ -1,0 +1,151 @@
+
+<style>
+
+
+.container-payment {
+    max-width: 600px;
+    margin: 0px auto;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.title-payment {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.movie-details {
+    margin-bottom: 20px;
+}
+
+.price-table {
+    width: 100%;
+}
+
+.price-table th,
+.price-table td {
+    padding: 10px;
+}
+
+.price-table th {
+    background-color: #ddd;
+}
+
+.price-table tfoot td {
+    text-align: right;
+}
+
+@media (max-width: 600px) {
+    .price-table {
+        display: block;
+    }
+
+    .price-table thead,
+    .price-table tbody,
+    .price-table tfoot {
+        display: table;
+        width: 100%;
+    }
+
+    .price-table thead tr,
+    .price-table tbody tr,
+    .price-table tfoot tr {
+        display: table-row;
+    }
+
+    .price-table th,
+    .price-table td {
+        display: table-cell;
+        padding: 5px;
+    }
+
+    .price-table th {
+        background-color: #ddd;
+    }
+}
+.image-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.image {
+    width:200px;
+    height:300px;
+}
+</style>
+<h1 class="title-payment">Payment</h1>
+<div class="container-payment">
+    <div class="movie-details" style="display:flex">
+        <div class="image-container">
+            <img src="<?php echo $this->basePath('img/img/11111.jpg') ?>" alt="Your Image Description" class="image">
+        </div>
+        <div style="padding-left:30px">
+            <h2 style="margin:0px; margin-bottom:10px"><b id="name" style="text-transform: capitalize;"></b></h2>
+            <p>CGV Transmart Tegal, Tegal</p>
+            <p id="date">Thu, 05 May 2022</p>
+            <p>Jam Tayang  <span style="margin-left:3px" id="jam"></span></p>
+            <p>Seat        <span style="margin-left:50px" id="seat"></span></p>
+        </div>
+    </div>
+    <hr>
+    <table class="price-table">
+        <tbody>
+            <tr>
+                <td>Harga Tiket</td>
+                <td></td>
+                <td style="text-align:right"><span id="harga"></span></td>
+            </tr>
+            <tr>
+                <td>Jumlah Tiket</td>
+                <td></td>
+                <td style="text-align:right" id="jumlah"></td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td style="text-align:left"><strong>TOTAL PAYMENT</strong></td>
+                <td colspan="2"><strong><span id="total"></span></strong></td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="btn btn-success">pay</button>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $.ajax({
+            url: '<?php echo $this->basePath()?>/bioskop/get-list-order', // URL to your Zend controller action
+            type: 'GET',                  
+            dataType: 'json',              
+            success: function (data) {
+                console.log(data)
+                var total_harga = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(data.data[0]['total_harga']);
+                var harga_tiket = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(data.data[0]['harga_tiket']);
+                $('#name').text(data.data[0]['nama_film'])   
+                $('#harga').text(harga_tiket)   
+                $('#seat').text(': '+data.data[0]['nomor_duduk'])   
+                $('#jumlah').text(data.data[0]['nomor_duduk'].length)   
+                $('#total').text(total_harga)   
+
+    // Convert the string to a Date object
+                var dateObject = new Date(data.data[0]['jam_tayang']);
+
+                // Extract the time part (HH:mm)
+                var timePart = ('0' + dateObject.getHours()).slice(-2) + ':' + ('0' + dateObject.getMinutes()).slice(-2);
+                var datePart = dateObject.toISOString().split('T')[0];
+                $('#jam').text(': '+timePart)   
+                $('#date').text(datePart)   
+            },
+            error: function (xhr, status, error) {
+                // Handle error response
+                console.error(xhr.responseText);
+                alert('An error occurred while processing the request.');
+            }
+          });
+    })
+</script>

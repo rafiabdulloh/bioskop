@@ -36,25 +36,34 @@ class Bioskop
 			return $data;
 		}
 	}
+
+    public function getOrder() {
+        $sql = new Sql($this->adapter);
+    
+        $select = $sql->select()
+            ->FROM(['o' => 'order'])
+            ->JOIN(['f' => 'film'], 'o.id_film = f.id_film', ['nama_film', 'jam_tayang', 'harga_tiket'])
+            ->WHERE('o.id_status_pembayaran = 1')
+            ->ORDER('o.created_at DESC');
+    
+        $statement = $sql->prepareStatementForSqlObject($select);
+        $result = $statement->execute();
+    
+        if ($result instanceof ResultInterface && $result->isQueryResult()) {
+            $resultSet = new ResultSet;
+            $resultSet->initialize($result);
+    
+            $data = $resultSet->toArray();
+            foreach ($data as $key => $value) {
+                $value['nomor_duduk'] = explode(',', $value['nomor_duduk']);
+                $value['total_harga'] = count($value['nomor_duduk']) * $value['harga_tiket'];
+                $data[$key] = $value;
+                return $data;
+            }
+            return $data;
+        }
+    }
 	
-	public function read2(){
-		$stmt = $this->adapter->createStatement
-		('SELECT a.ad, a.se, a.pt, b.id AS bid, c.Info AS CInf
-			FROM a 
-				JOIN b ON a.ad = b.ad
-					LEFT JOIN c ON b.id = c.id
-		');
-
-		$result = $stmt->execute();
-
-		if ($result instanceof ResultInterface && $result->isQueryResult()) {
-			$resultSet = new ResultSet;
-			$resultSet->initialize($result);
-
-			$data = $resultSet->toArray();
-			return $data;
-		}		
-	}
     public function getData(){
         $data = $_SERVER;
         return $data;
