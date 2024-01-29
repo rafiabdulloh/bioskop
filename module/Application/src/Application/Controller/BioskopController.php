@@ -49,17 +49,23 @@ class BioskopController extends AbstractActionController
     
         $bioskop = new \Application\Model\Bioskop($this->db);
         $postData = $this->getRequest()->getPost();
-        // $data = $bioskop->insertPembayaran();
-        $jsonResponse = [
-            'code' => 0,
-            'info' => 'OK',
-            'data' => $postData,
-        ];
+        $data = $bioskop->insertPembayaran($postData);
+        if(isset($data['id_status_pembayaran'])){
+            $jsonResponse = [
+                'code' => 400,
+                'info' => 'ERROR',
+                'data' => $data,
+            ];
+        } else {
+            $jsonResponse = [
+                'code' => 200,
+                'info' => 'OK',
+                'data' => $data,
+            ];
+        }
 
-        // Encode the array to JSON using json_encode
         $jsonString = json_encode($jsonResponse);
 
-        // Create a response object and set content and status code
         $response = $this->getResponse();
         $response->setStatusCode(200);
         $response->setContent($jsonString);
@@ -87,10 +93,8 @@ class BioskopController extends AbstractActionController
             'data' => $data,
         ];
 
-        // Encode the array to JSON using json_encode
         $jsonString = json_encode($jsonResponse);
 
-        // Create a response object and set content and status code
         $response = $this->getResponse();
         $response->setStatusCode(200);
         $response->setContent($jsonString);
@@ -98,7 +102,29 @@ class BioskopController extends AbstractActionController
         return $response;
     }
 
-   
+    public function updatePaymentAction(){
+        $this->config = $this->getServiceLocator()->get('Config');
+        $this->db = $this->config['db'];
+    
+        $bioskop = new \Application\Model\Bioskop($this->db);
+        $postData = $this->getRequest()->getPost();
+        
+        $data = $bioskop->updatePeyment($postData);
+
+        $jsonResponse = [
+            'code' => 0,
+            'info' => 'OK',
+            'data' => $data,
+        ];
+
+        $jsonString = json_encode($jsonResponse);
+
+        $response = $this->getResponse();
+        $response->setStatusCode(200);
+        $response->setContent($jsonString);
+
+        return $response;
+    }
 }
 
 ?>

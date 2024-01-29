@@ -20,7 +20,7 @@ return array(
                     ),
                 ),
             ),
-            'bioskop' => array(
+            'bioskop' => array( //======================================================== baru
                 'type'    => 'Literal',
                 'options' => array(
                     'route'    => '/bioskop',
@@ -44,7 +44,7 @@ return array(
                         ),
                     ),
                 ),
-            ),
+            ), //======================================================================= rafidev
             // The following is a route to simplify getting started creating
             // new controllers and actions without needing to create a new
             // module. Simply drop new controllers in, and you can access them
@@ -100,7 +100,7 @@ return array(
         'invokables' => array(
             'Application\Controller\Index' => 'Application\Controller\IndexController',
             'Application\Controller\Alam' => 'Application\Controller\AlamController',
-            'Application\Controller\Bioskop' => 'Application\Controller\BioskopController', // Tambahkan ini
+            'Application\Controller\Bioskop' => 'Application\Controller\BioskopController', // Tambahkan ini untuk controller baru
         ),
     ),
     'view_manager' => array(
@@ -114,7 +114,7 @@ return array(
             'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
-            'application/bioskop/index' => __DIR__ . '/../view/application/bioskop/index.phtml',
+            'application/bioskop/index' => __DIR__ . '/../view/application/bioskop/index.phtml', // tambahkan ini untuk folder view baru
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',
